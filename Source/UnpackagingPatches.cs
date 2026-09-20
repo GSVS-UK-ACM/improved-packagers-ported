@@ -416,7 +416,7 @@ namespace ImprovedPackagers
                 __instance.MoveItemBehaviour.Initialize(route, product);
                 __instance.MoveItemBehaviour.Enable_Networked(null);
 #endif
-                MelonLogger.Msg("Packager started delivery of unpacked product.");
+                RuntimeTrace.Message("Packager started delivery of unpacked product.");
             }
             catch (System.Exception ex)
             {

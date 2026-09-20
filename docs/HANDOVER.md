@@ -2,7 +2,7 @@
 
 ## Schedule I 0.4.6f13 IL2CPP compatibility port
 
-- Status: `PUBLISHED_V2.0.1_F13_PORTED_GITHUB_AND_NEXUS`
+- Status: `TESTING_V2.0.2_EXTENDED_LOGGING`
 - Maintained repository: `https://github.com/xboxnuker-rgb/improved-packagers-ported`
 - Merge target: `main`
 - Branch: `main`
@@ -445,6 +445,26 @@ RC3 changes release identity and packaging only; candidate 20's passing worker/r
 - Requirements list `Mod Manager - Phone App` as a required Nexus mod and MelonLoader 0.7.0 Open-Beta as an external resource.
 - Permissions declare third-party code, prominently credit GuysWeForgotDre and ecrgr, and reproduce the original MIT licence as the custom permission text.
 - The owner explicitly approved publication on 2026-09-19. The live page was verified after publication with one Main file, six images, the complete formatted description, and Nexus's `Safe to use` virus-scan result.
+
+### Version 2.0.2 extended-logging candidate
+
+Version 2.0.2 keeps the passing f13 worker and transit implementation unchanged and reduces the diagnostic volume left over from candidates 19 and 20.
+
+- Branch: `feat/extended-logging`.
+- Build identity: `f13-logging-rc2`.
+- Added a Mod Manager preference named `Extended Logging` under `Improved Packagers PORTED`; it defaults to `false` and is stored by MelonPreferences. The category identifier is `ImprovedPackagersPORTED`, matching Mod Manager & Phone App's whitespace-free mod-name lookup so the setting remains visible when "hide mods with no settings" is enabled.
+- Detailed station ticks, readiness gates, Harmony-hook traces, worker selections, transit-slot state, product-bridge details and delivery-start messages are emitted only while Extended Logging is enabled.
+- Startup identity, the GSVS banner, mode changes/inferences, route-waiting warnings, errors and the preference-change confirmation remain visible in normal logs.
+- The setting is read dynamically after Mod Manager saves preferences. Changing it resets trace de-duplication so a newly enabled session reports fresh state.
+- Exact f13 API verification passed against `Assembly-CSharp.dll` SHA-256 `0D2EB364F3E84120AF7CCC9FA6BAFD597D42D495EBACC3A260CB4CA0CF0513DA`.
+- Release build completed with zero warnings and zero errors using .NET SDK `8.0.425`.
+- Compiled assembly version: `2.0.2.0`.
+- Candidate DLL SHA-256: `075BFE2B38F3804FD61C33A45B6464DE195E1ED964DE60880CF6684133FA16B0`.
+- Candidate package: `artifacts/Improved-Packagers-PORTED-v2.0.2-test2-Schedule-I-f13.zip`.
+- Candidate package SHA-256: `94E8C92BCD0925E993B4769539B264C466639EEE04B8DEF2C665E4E59C7F527B`.
+- Static IL inspection confirms the preference default is `false` and each high-frequency trace entry point returns before reading station or worker state when disabled.
+- The candidate is installed at `Schedule I/Mods/ImprovedPackagersPORTED.dll`; the previously installed 2.0.1 DLL is backed up under ignored `artifacts/`.
+- Runtime verification still required: launch with the setting off, confirm no `[Trace]` lines during a complete unpack/delivery cycle, enable Extended Logging and confirm traces appear, then disable it again and confirm new traces stop without restarting.
 
 ### Upstream maintenance model
 

@@ -64,6 +64,8 @@ namespace ImprovedPackagers
 
         private static void OnPrefsSaved()
         {
+            ImprovedPackagers.NotifyPreferencesSaved();
+
             try
             {
                 foreach (var property in Property.OwnedProperties)

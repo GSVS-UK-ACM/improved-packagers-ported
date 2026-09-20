@@ -1,5 +1,11 @@
 # Changelog
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). Adheres to [Semantic Versioning](https://semver.org/).
+## [2.0.2] - 2026-09-20
+### Added
+- Added an **Extended Logging** Mod Manager setting for detailed station, worker-selection and transit diagnostics. It is disabled by default and can be changed while the game is running.
+### Changed
+- Moved high-frequency station ticks, readiness states, Harmony-hook traces, worker selections, product-bridge details and delivery-start messages behind Extended Logging.
+- Kept the startup banner, compatibility identity, mode changes and inferences, route warnings, errors and preference-change confirmation visible in normal logs.
 ## [2.0.1] - 2026-09-17
 ### Changed
 - Standardized the public mod, assembly, DLL, package, and log identity as **Improved Packagers PORTED** while preserving original-author credit.

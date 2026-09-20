@@ -21,8 +21,14 @@ namespace ImprovedPackagers
     {
         private static readonly Dictionary<string, string> LastValues = new Dictionary<string, string>();
 
+        private static bool Enabled => ImprovedPackagers.ExtendedLoggingEnabled;
+
+        public static void Reset() => LastValues.Clear();
+
         public static void Changed(string key, string message)
         {
+            if (!Enabled) return;
+
             if (LastValues.TryGetValue(key, out var previous) && previous == message)
                 return;
 
@@ -32,6 +38,8 @@ namespace ImprovedPackagers
 
         public static void Hook(string hook, PackagingStation station, string detail = null)
         {
+            if (!Enabled) return;
+
             try
             {
                 string key = StationKey(station);
@@ -54,6 +62,8 @@ namespace ImprovedPackagers
             PackagingStation.EState selectedState,
             string gate)
         {
+            if (!Enabled) return;
+
             try
             {
                 string key = StationKey(station);
@@ -82,6 +92,8 @@ namespace ImprovedPackagers
 
         public static void BehaviourTick(PackagingStationBehaviour behaviour)
         {
+            if (!Enabled) return;
+
             try
             {
                 var station = behaviour?.Station;
@@ -103,6 +115,8 @@ namespace ImprovedPackagers
 
         public static void PackagerSelection(string hook, Packager packager, PackagingStation station)
         {
+            if (!Enabled) return;
+
             try
             {
                 string stationKey = StationKey(station);
@@ -118,6 +132,8 @@ namespace ImprovedPackagers
 
         public static void StationUser(PackagingStation station, NetworkObject npcObject)
         {
+            if (!Enabled) return;
+
             try
             {
                 string key = StationKey(station);
@@ -129,6 +145,12 @@ namespace ImprovedPackagers
             {
                 Changed("trace-error:station-user", $"trace error in station-user: {ex.GetType().Name}: {ex.Message}");
             }
+        }
+
+        public static void Message(string message)
+        {
+            if (!Enabled) return;
+            MelonLogger.Msg($"[Trace] {message}");
         }
 
         public static string Slots(PackagingStation station)
