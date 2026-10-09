@@ -3,7 +3,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string] $MelonLoaderRoot,
 
-    [string] $ExpectedAssemblySha256 = "0D2EB364F3E84120AF7CCC9FA6BAFD597D42D495EBACC3A260CB4CA0CF0513DA"
+    [string] $ExpectedAssemblySha256 = "CEC1F3D02B38CEBB59A977FB8C23400094203C63FF7AAA5094143925475BB2CC",
+
+    [string] $TargetGameVersion = "0.4.7f12"
 )
 
 $ErrorActionPreference = "Stop"
@@ -212,7 +214,7 @@ try {
     )
 
     Write-Output "PASS Assembly-CSharp.dll SHA256 $actualHash"
-    Write-Output "Schedule I 0.4.6f13 IL2CPP API verification passed."
+    Write-Output "Schedule I $TargetGameVersion IL2CPP API verification passed."
 }
 finally {
     $assembly.Dispose()

@@ -1,5 +1,62 @@
 # Current Handover
 
+## Schedule I 0.4.7f12 compatibility candidate
+
+- Status: `READY_AWAITING_CTA_TO_INSTALL_V2.0.2_0.4.7F12_RC1`
+- Branch: `compat/schedule-i-0.4.7f12`
+- Source base: `902a4baa5a195d271c5d81c2d338fc0901f4e9e4` (`feat/extended-logging`)
+- Work mode: offline/static only. The candidate has **not** been copied to the game and the game has not been launched for it.
+- Public stable remains 2.0.1 for 0.4.6f13 until the owner approves installation, live testing and release work.
+
+### 0.4.7f12 reference evidence
+
+- Steam build ID: `25796331`.
+- Schedule I: `0.4.7f12`.
+- Unity: `2022.3.62f2`.
+- MelonLoader: `0.7.0 Open-Beta`, net6.
+- `GameAssembly.dll` SHA-256: `61829050E56CA180D67BE592E4BFE61EC97D2E9573F720D90A54E318A7E4381D`.
+- `global-metadata.dat` SHA-256: `E775C97DA277DA8EB1A90265478F3B65C9C3D6464AFF4F7255D45280A1D1181F`.
+- Generated `Assembly-CSharp.dll` SHA-256: `CEC1F3D02B38CEBB59A977FB8C23400094203C63FF7AAA5094143925475BB2CC`.
+
+### Offline compatibility result
+
+- Every exact Harmony target, property, constructor and overload used by the port passed `scripts/verify-game-api.ps1` against the 0.4.7f12 generated interop assembly, including parameter-name checks for the fragile overloads.
+- Release build completed with zero warnings and zero errors using .NET SDK `8.0.425`.
+- Compiled assembly version: `2.0.2.0`; build identity: `0.4.7f12-compat-rc1`.
+- Candidate DLL: `bin/Il2Cpp/ImprovedPackagersPORTED.dll`.
+- Candidate DLL SHA-256: `57C45448FBC48F97C5A3027FDD9358E2A6C6EEA2F7F423495B1C825B865BF04E`.
+- Candidate package: `artifacts/Improved-Packagers-PORTED-v2.0.2-Schedule-I-0.4.7f12-compat-rc1.zip`.
+- Candidate package SHA-256: `A0442158F9A930A640E6DA3F9A8E9DB18DDB3979F2DC3455EDB1B58FA6C4A975`.
+- The ZIP contains one root-level file, `ImprovedPackagersPORTED.dll` (33,280 bytes), and no game, loader or interop dependencies.
+- Static IL inspection confirms both input-routing paths clear the transit input list, map Unpackage to `OutputSlot`, and restore Package to `ProductSlot` plus `PackagingSlot`.
+- The previously installed 2.0.2 f13 logging candidate reached the 0.4.7f12 main menu without an Improved Packagers `HarmonyException` or undefined-target error. That is useful startup baseline evidence only; it is not a runtime pass for this candidate.
+
+### Reported unpack-input regression and correction
+
+The Nexus report says workers can unpack and deliver output but load incoming packaged items into the station's Product slot instead of its physical Output slot. Static inspection found that the port was exposing `PackagingSlot` as the worker transit input in Unpackage mode. Manual station behavior and the game's station state logic use `OutputSlot` for a brick, jar or baggie awaiting breakdown, while the resulting loose product belongs in `ProductSlot`.
+
+The candidate now applies the complete mode mapping consistently:
+
+- Package input: `ProductSlot` plus `PackagingSlot`.
+- Package output: `OutputSlot`.
+- Unpackage input: `OutputSlot`.
+- Unpackage output: `ProductSlot`.
+
+The `InputSlots` getter patch also restores the package-mode list after a mode switch instead of leaving the unpack mapping behind.
+
+### CTA-gated installation and runtime checklist
+
+Do not install until the owner gives the CTA. On approval, first test with Improved Packagers PORTED and its required Mod Manager dependency only. The currently installed Harder Working Employees build is separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` is missing), so it must not be used to judge this candidate until that mod is updated.
+
+1. Confirm the new banner says `v2.0.2`, `0.4.7f12` and `0.4.7f12-compat-rc1`, with no Improved Packagers Harmony/undefined-target errors.
+2. Confirm Extended Logging is visible and defaults off; run a cycle without trace spam, then verify traces can be enabled and disabled live.
+3. In Package mode, confirm workers still supply loose product plus packaging and collect the packaged `OutputSlot` result.
+4. In Unpackage mode, route packaged bricks, jars or baggies to the station and confirm they enter physical `OutputSlot`, never `ProductSlot` or `PackagingSlot`.
+5. Confirm the worker unpacks, collects loose `ProductSlot` output, delivers it to the configured destination and repeats for at least three complete cycles.
+6. Switch Unpackage to Package and back, confirming the correct input slots are restored each time.
+7. Save/reload and confirm the selected mode and route behavior persist.
+8. Only after the isolated pass, repeat with the normal mod set and then verify Loading Bay Load Only, Unload Only and Dual directions.
+
 ## Schedule I 0.4.6f13 IL2CPP compatibility port
 
 - Status: `TESTING_V2.0.2_EXTENDED_LOGGING`

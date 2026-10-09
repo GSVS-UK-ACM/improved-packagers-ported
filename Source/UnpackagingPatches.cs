@@ -221,9 +221,9 @@ namespace ImprovedPackagers
                 return;
 
             // Item-specific capacity and compatibility are enforced through the
-            // unpack-mode InputSlots route. This coarse property must stay true
-            // for partially filled PackagingSlots as well as empty ones.
-            if (!(__instance.PackagingSlot is null))
+            // unpack-mode InputSlots route. Packaged items awaiting breakdown
+            // live in OutputSlot, despite that slot's package-mode name.
+            if (!(__instance.OutputSlot is null))
                 __result = true;
         }
     }
@@ -240,15 +240,21 @@ namespace ImprovedPackagers
 #endif
         {
             if (__instance is null || __result is null ||
-                !StationModeRegistry.TryGetMode(__instance, out var mode) ||
-                mode != PackagingStation.EMode.Unpackage)
+                !StationModeRegistry.TryGetMode(__instance, out var mode))
                 return;
 
-            var packagingSlot = __instance.PackagingSlot;
-            if (packagingSlot is null) return;
-            foreach (var slot in __result)
-                if (slot == packagingSlot) return;
-            __result.Add(packagingSlot);
+            __result.Clear();
+            if (mode == PackagingStation.EMode.Unpackage)
+            {
+                if (!(__instance.OutputSlot is null))
+                    __result.Add(__instance.OutputSlot);
+                return;
+            }
+
+            if (!(__instance.ProductSlot is null))
+                __result.Add(__instance.ProductSlot);
+            if (!(__instance.PackagingSlot is null))
+                __result.Add(__instance.PackagingSlot);
         }
     }
 

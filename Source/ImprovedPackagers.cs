@@ -17,9 +17,10 @@ namespace ImprovedPackagers
     {
         public const string ModName = "Improved Packagers PORTED";
         public const string Version = "2.0.2";
+        public const string TargetGameVersion = "0.4.7f12";
         public const string Author = "GuysWeForgotDre | Ported by GSVS UK ACM";
-        public const string ModDesc = "PORTED for Schedule I f13: enables Packagers to unpack product and load vehicles parked in Loading Bays";
-        public const string BuildIdentity = "f13-logging-rc2";
+        public const string ModDesc = "PORTED for Schedule I " + TargetGameVersion + ": enables Packagers to unpack product and load vehicles parked in Loading Bays";
+        public const string BuildIdentity = "0.4.7f12-compat-rc1";
 
         private MelonPreferences_Category PropertyGroup;
         private static MelonPreferences_Entry<bool> ExtendedLoggingPreference;

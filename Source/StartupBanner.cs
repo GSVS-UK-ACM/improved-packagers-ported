@@ -19,11 +19,11 @@ namespace ImprovedPackagers
             MelonLogger.Msg(string.Empty);
             MelonLogger.Msg($"{Purple6}────────────{Reset} {Green}STAYING PORTED BY{Reset} {Purple6}────────────{Reset}");
             PrintRow(Purple1, "  ██████╗  ███████╗ ██╗   ██╗ ███████╗  ", "Improved Packagers PORTED ", $"v{ImprovedPackagers.Version}");
-            PrintRow(Purple2, " ██╔════╝  ██╔════╝ ██║   ██║ ██╔════╝  ", "Schedule I ", "0.4.6f13 | IL2CPP");
+            PrintRow(Purple2, " ██╔════╝  ██╔════╝ ██║   ██║ ██╔════╝  ", "Schedule I ", $"{ImprovedPackagers.TargetGameVersion} | IL2CPP");
             PrintRow(Purple3, " ██║  ███╗ ███████╗ ██║   ██║ ███████╗  ", "Build: ", ImprovedPackagers.BuildIdentity);
             PrintRow(Purple4, " ██║   ██║ ╚════██║ ╚██╗ ██╔╝ ╚════██║  ", "Original: ", "GuysWeForgotDre");
             PrintRow(Purple5, " ╚██████╔╝ ███████║  ╚████╔╝  ███████║  ", "Ported by ", "GSVS UK ACM");
-            MelonLogger.Msg($"{Purple6}  ╚═════╝  ╚══════╝   ╚═══╝   ╚══════╝  {Reset}  {White}Schedule I f13 compatibility port{Reset}");
+            MelonLogger.Msg($"{Purple6}  ╚═════╝  ╚══════╝   ╚═══╝   ╚══════╝  {Reset}  {White}Schedule I {ImprovedPackagers.TargetGameVersion} compatibility port{Reset}");
             MelonLogger.Msg($"{Purple6}────────────────────────────────────────────{Reset}{Green}◆{Reset}{Purple6}────────────────────────{Reset}");
         }
 

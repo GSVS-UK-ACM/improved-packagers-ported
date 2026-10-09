@@ -59,6 +59,7 @@ public static class StationModeRegistry
         bool changed = !_explicit.TryGetValue(guid, out var previous) || previous != (int)mode;
         _explicit[guid] = (int)mode;
         _sticky.Remove(guid);
+        ApplyTransitInput(station, mode);
         ApplyTransitOutput(station, mode);
         Save();
 
@@ -89,6 +90,7 @@ public static class StationModeRegistry
         if (_explicit.TryGetValue(station.GUID.ToString(), out var m))
         {
             _sticky[station.GUID.ToString()] = m;
+            ApplyTransitInput(station, (PackagingStation.EMode)m);
             ApplyTransitOutput(station, (PackagingStation.EMode)m);
         }
     }
@@ -102,6 +104,7 @@ public static class StationModeRegistry
             mode = (PackagingStation.EMode)existing;
         else
             _sticky[guid] = (int)mode;
+        ApplyTransitInput(station, mode);
         ApplyTransitOutput(station, mode);
     }
 
@@ -116,7 +119,7 @@ public static class StationModeRegistry
             PackagingStation.EState.CanBegin;
 
         // Do not persist a guess while the station is idle or ambiguous. As soon
-        // as exactly one f13 mode is ready, use that state to break the first-run
+        // as exactly one game mode is ready, use that state to break the first-run
         // chicken-and-egg problem (the NPC cannot claim the station until a mode
         // is known, and SetNPCUser cannot run until the station is claimed).
         if (canUnpackage && !canPackage)
@@ -139,6 +142,29 @@ public static class StationModeRegistry
         _explicit.Remove(station.GUID.ToString());
         _sticky.Remove(station.GUID.ToString());
         Save();
+    }
+
+    // In Package mode the station consumes loose product plus packaging. In
+    // Unpackage mode the already-packaged brick/jar/baggie is placed in the
+    // physical OutputSlot before the station breaks it down into ProductSlot.
+    public static void ApplyTransitInput(PackagingStation station, PackagingStation.EMode mode)
+    {
+        if (station is null) return;
+        var transitInputs = station.InputSlots;
+        if (transitInputs is null) return;
+        transitInputs.Clear();
+
+        if (mode == PackagingStation.EMode.Unpackage)
+        {
+            if (!(station.OutputSlot is null))
+                transitInputs.Add(station.OutputSlot);
+            return;
+        }
+
+        if (!(station.ProductSlot is null))
+            transitInputs.Add(station.ProductSlot);
+        if (!(station.PackagingSlot is null))
+            transitInputs.Add(station.PackagingSlot);
     }
 
     // PR #2 by ecrgr identified that loose product created by Unpack lives in

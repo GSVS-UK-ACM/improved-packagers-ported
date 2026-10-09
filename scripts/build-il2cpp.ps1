@@ -3,13 +3,20 @@ param(
     [Parameter(Mandatory = $true)]
     [string] $MelonLoaderRoot,
 
-    [string] $DotNet = "dotnet"
+    [string] $DotNet = "dotnet",
+
+    [string] $ExpectedAssemblySha256 = "CEC1F3D02B38CEBB59A977FB8C23400094203C63FF7AAA5094143925475BB2CC",
+
+    [string] $TargetGameVersion = "0.4.7f12"
 )
 
 $ErrorActionPreference = "Stop"
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 
-& (Join-Path $PSScriptRoot "verify-game-api.ps1") -MelonLoaderRoot $MelonLoaderRoot
+& (Join-Path $PSScriptRoot "verify-game-api.ps1") `
+    -MelonLoaderRoot $MelonLoaderRoot `
+    -ExpectedAssemblySha256 $ExpectedAssemblySha256 `
+    -TargetGameVersion $TargetGameVersion
 if ($LASTEXITCODE) {
     exit $LASTEXITCODE
 }
