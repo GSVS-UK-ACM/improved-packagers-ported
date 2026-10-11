@@ -9,6 +9,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). Adhere
 - Kept the startup banner, compatibility identity, mode changes and inferences, route warnings, errors and preference-change confirmation visible in normal logs.
 ### Fixed
 - Corrected unpack-mode input routing so Packagers load bricks, jars and baggies into the station's `OutputSlot`, matching manual unpacking, instead of treating `PackagingSlot` as the unpack input.
+- Let brick unpacking ignore leftover baggies in `PackagingSlot`, matching the game's own behavior of not returning brick packaging, while retaining vanilla capacity checks for jar and baggie unpacking.
 ## [2.0.1] - 2026-09-17
 ### Changed
 - Standardized the public mod, assembly, DLL, package, and log identity as **Improved Packagers PORTED** while preserving original-author credit.

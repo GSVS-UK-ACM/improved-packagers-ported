@@ -101,6 +101,48 @@ namespace ImprovedPackagers
         }
     }
 
+    static class UnpackageStateCompatibility
+    {
+        private const string BrickPackagingId = "brick";
+
+        // Vanilla checks whether the PackagingSlot can receive the packaging
+        // recovered by an unpack operation. Bricks are explicitly discarded by
+        // PackagingStation.Unpack(), so leftover baggies in that slot are not a
+        // real blocker and must not prevent a brick from being unpacked.
+        public static bool CanUnpackBrickWithOccupiedPackagingSlot(PackagingStation station)
+        {
+            if (station?.PackagingSlot?.ItemInstance is null ||
+                station.PackagingSlot.Quantity <= 0 ||
+                station.OutputSlot?.ItemInstance is null ||
+                station.OutputSlot.Quantity <= 0 ||
+                station.ProductSlot is null)
+                return false;
+
+#if Il2Cpp
+            var packagedProduct = (station.OutputSlot.ItemInstance as Il2CppObjectBase)?.TryCast<Il2CppScheduleOne.Product.ProductItemInstance>();
+#elif Mono
+            var packagedProduct = station.OutputSlot.ItemInstance as ScheduleOne.Product.ProductItemInstance;
+#endif
+            var appliedPackaging = packagedProduct?.AppliedPackaging;
+            if (appliedPackaging is null ||
+                !string.Equals(appliedPackaging.ID, BrickPackagingId, System.StringComparison.OrdinalIgnoreCase) ||
+                appliedPackaging.Quantity <= 0)
+                return false;
+
+            var looseItem = packagedProduct.GetCopy(appliedPackaging.Quantity);
+#if Il2Cpp
+            var looseProduct = (looseItem as Il2CppObjectBase)?.TryCast<Il2CppScheduleOne.Product.ProductItemInstance>();
+#elif Mono
+            var looseProduct = looseItem as ScheduleOne.Product.ProductItemInstance;
+#endif
+            if (looseProduct is null)
+                return false;
+
+            looseProduct.SetPackaging(null);
+            return station.ProductSlot.GetCapacityForItem(looseProduct, false) >= appliedPackaging.Quantity;
+        }
+    }
+
     /*
      * PackagingStationCanvas Patches
      * */
@@ -225,6 +267,41 @@ namespace ImprovedPackagers
             // live in OutputSlot, despite that slot's package-mode name.
             if (!(__instance.OutputSlot is null))
                 __result = true;
+        }
+    }
+
+    [HarmonyPatch(
+        typeof(PackagingStation),
+        nameof(PackagingStation.GetState),
+        new[] { typeof(PackagingStation.EMode) })]
+    static class PackagingStationGetStatePatch
+    {
+        static void Postfix(
+            PackagingStation __instance,
+            PackagingStation.EMode mode,
+            ref PackagingStation.EState __result)
+        {
+            if (mode != PackagingStation.EMode.Unpackage ||
+                __result == PackagingStation.EState.CanBegin)
+                return;
+
+            try
+            {
+                if (!UnpackageStateCompatibility.CanUnpackBrickWithOccupiedPackagingSlot(__instance))
+                    return;
+
+                RuntimeTrace.Hook(
+                    "PackagingStation.GetState brick packaging-slot bypass",
+                    __instance,
+                    $"vanillaState={__result}");
+                __result = PackagingStation.EState.CanBegin;
+            }
+            catch (System.Exception ex)
+            {
+                RuntimeTrace.Changed(
+                    "brick-packaging-slot-bypass-error",
+                    $"brick packaging-slot bypass failed: {ex.GetType().Name}: {ex.Message}");
+            }
         }
     }
 

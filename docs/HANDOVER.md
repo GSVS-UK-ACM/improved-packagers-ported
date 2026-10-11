@@ -2,10 +2,10 @@
 
 ## Schedule I 0.4.7f12 compatibility candidate
 
-- Status: `INSTALLED_AWAITING_RUNTIME_TEST_V2.0.2_0.4.7F12_RC1`
+- Status: `READY_TO_INSTALL_V2.0.2_0.4.7F12_RC2`
 - Branch: `compat/schedule-i-0.4.7f12`
 - Source base: `902a4baa5a195d271c5d81c2d338fc0901f4e9e4` (`feat/extended-logging`)
-- Installed on 2026-10-11 after the owner's CTA; the game has not yet been launched with this candidate.
+- RC1 was installed on 2026-10-11 after the owner's CTA but was not launched. The newly diagnosed residual-baggies fix is now built as RC2 and must replace RC1 before launch.
 - Public stable remains 2.0.1 for 0.4.6f13 until the owner approves installation, live testing and release work.
 
 ### 0.4.7f12 reference evidence
@@ -46,18 +46,34 @@ The candidate now applies the complete mode mapping consistently:
 
 The `InputSlots` getter patch also restores the package-mode list after a mode switch instead of leaving the unpack mapping behind.
 
+### RC2 residual-baggies correction
+
+The owner identified the exact remaining case: a brick reaches `OutputSlot`, but any baggies left in `PackagingSlot` make vanilla `GetState(Unpackage)` reject the operation. Native inspection confirms `PackagingStation.Unpack()` explicitly does not return packaging when the applied packaging ID is `brick`; therefore the occupied packaging slot is irrelevant for brick unpacking.
+
+- RC2 overrides only that safe case: Unpackage mode, a valid brick in `OutputSlot`, an occupied `PackagingSlot`, and sufficient `ProductSlot` capacity for the resulting loose product.
+- Existing baggies are neither moved nor deleted.
+- Jar and baggie unpacking retain vanilla packaging compatibility and capacity checks because those operations really do return reusable packaging.
+- Build identity: `0.4.7f12-compat-rc2`.
+- Exact 0.4.7f12 API verification passed, including `ProductItemInstance.AppliedPackaging`, `SetPackaging`, `PackagingDefinition.Quantity`, and `ItemSlot.GetCapacityForItem`.
+- Release build: zero warnings and zero errors.
+- RC2 DLL SHA-256: `E4F8D59BAA02165139B15677190D2758D17661B62CD15C9A931C4CC65FCBD58E`.
+- RC2 package: `artifacts/Improved-Packagers-PORTED-v2.0.2-Schedule-I-0.4.7f12-compat-rc2.zip`.
+- RC2 package SHA-256: `17127B3DA33C3A8D50635BACD7E8C6FFD2A53A9FB302349953A04F0AF353EC33`.
+- Package contents: one root-level `ImprovedPackagersPORTED.dll` (34,816 bytes).
+
 ### CTA-gated installation and runtime checklist
 
-Installation is complete. First test with Improved Packagers PORTED and its required Mod Manager dependency only. The previously observed Harder Working Employees build was separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` was missing), so it must not be used to judge this candidate until that mod's update is confirmed.
+Install RC2 over RC1, then first test with Improved Packagers PORTED and its required Mod Manager dependency only. The previously observed Harder Working Employees build was separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` was missing), so it must not be used to judge this candidate until that mod's update is confirmed.
 
-1. Confirm the new banner says `v2.0.2`, `0.4.7f12` and `0.4.7f12-compat-rc1`, with no Improved Packagers Harmony/undefined-target errors.
+1. Confirm the new banner says `v2.0.2`, `0.4.7f12` and `0.4.7f12-compat-rc2`, with no Improved Packagers Harmony/undefined-target errors.
 2. Confirm Extended Logging is visible and defaults off; run a cycle without trace spam, then verify traces can be enabled and disabled live.
 3. In Package mode, confirm workers still supply loose product plus packaging and collect the packaged `OutputSlot` result.
 4. In Unpackage mode, route packaged bricks, jars or baggies to the station and confirm they enter physical `OutputSlot`, never `ProductSlot` or `PackagingSlot`.
-5. Confirm the worker unpacks, collects loose `ProductSlot` output, delivers it to the configured destination and repeats for at least three complete cycles.
-6. Switch Unpackage to Package and back, confirming the correct input slots are restored each time.
-7. Save/reload and confirm the selected mode and route behavior persist.
-8. Only after the isolated pass, repeat with the normal mod set and then verify Loading Bay Load Only, Unload Only and Dual directions.
+5. Leave the packaging slot partially filled and then full of baggies; confirm brick unpacking still starts, the baggies remain untouched, and the loose-product capacity gate still works.
+6. Confirm the worker unpacks, collects loose `ProductSlot` output, delivers it to the configured destination and repeats for at least three complete cycles.
+7. Switch Unpackage to Package and back, confirming the correct input slots are restored each time.
+8. Save/reload and confirm the selected mode and route behavior persist.
+9. Only after the isolated pass, repeat with the normal mod set and then verify Loading Bay Load Only, Unload Only and Dual directions.
 
 ## Schedule I 0.4.6f13 IL2CPP compatibility port
 

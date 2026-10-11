@@ -132,6 +132,11 @@ try {
     Assert-Method "Il2CppScheduleOne.ObjectScripts.PackagingStation" "GetState" @(
         "Il2CppScheduleOne.ObjectScripts.PackagingStation/EMode"
     )
+    Assert-Property "Il2CppScheduleOne.Product.ProductItemInstance" "AppliedPackaging" "Il2CppScheduleOne.Product.Packaging.PackagingDefinition"
+    Assert-Method "Il2CppScheduleOne.Product.ProductItemInstance" "SetPackaging" @(
+        "Il2CppScheduleOne.Product.Packaging.PackagingDefinition"
+    )
+    Assert-Property "Il2CppScheduleOne.Product.Packaging.PackagingDefinition" "Quantity" "System.Int32"
     Assert-Property "Il2CppScheduleOne.ObjectScripts.PackagingStation" "IsAcceptingItems" "System.Boolean"
     Assert-Property "Il2CppScheduleOne.ObjectScripts.PackagingStation" "PackagingSlot" "Il2CppScheduleOne.ItemFramework.ItemSlot"
     Assert-Property "Il2CppScheduleOne.ObjectScripts.PackagingStation" "InputSlots" 'Il2CppSystem.Collections.Generic.List`1<Il2CppScheduleOne.ItemFramework.ItemSlot>'
@@ -195,6 +200,10 @@ try {
     Assert-Method "Il2CppScheduleOne.ItemFramework.ItemInstance" "GetCopy" @("System.Int32")
     Assert-Method "Il2CppScheduleOne.ItemFramework.ItemSlot" "ChangeQuantity" @(
         "System.Int32",
+        "System.Boolean"
+    )
+    Assert-Method "Il2CppScheduleOne.ItemFramework.ItemSlot" "GetCapacityForItem" @(
+        "Il2CppScheduleOne.ItemFramework.ItemInstance",
         "System.Boolean"
     )
     Assert-Method "Il2CppScheduleOne.ObjectScripts.PackagingStation" "SetNPCUser" @(
