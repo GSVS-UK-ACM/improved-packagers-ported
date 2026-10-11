@@ -2,10 +2,10 @@
 
 ## Schedule I 0.4.7f12 compatibility candidate
 
-- Status: `READY_TO_INSTALL_V2.0.2_0.4.7F12_RC2`
+- Status: `INSTALLED_AWAITING_RUNTIME_TEST_V2.0.2_0.4.7F12_RC2`
 - Branch: `compat/schedule-i-0.4.7f12`
 - Source base: `902a4baa5a195d271c5d81c2d338fc0901f4e9e4` (`feat/extended-logging`)
-- RC1 was installed on 2026-10-11 after the owner's CTA but was not launched. The newly diagnosed residual-baggies fix is now built as RC2 and must replace RC1 before launch.
+- RC2 was installed on 2026-10-11 after the owner's CTA; its post-copy hash matches the verified candidate. The game has not yet been launched with RC2.
 - Public stable remains 2.0.1 for 0.4.6f13 until the owner approves installation, live testing and release work.
 
 ### 0.4.7f12 reference evidence
@@ -60,10 +60,12 @@ The owner identified the exact remaining case: a brick reaches `OutputSlot`, but
 - RC2 package: `artifacts/Improved-Packagers-PORTED-v2.0.2-Schedule-I-0.4.7f12-compat-rc2.zip`.
 - RC2 package SHA-256: `17127B3DA33C3A8D50635BACD7E8C6FFD2A53A9FB302349953A04F0AF353EC33`.
 - Package contents: one root-level `ImprovedPackagersPORTED.dll` (34,816 bytes).
+- Installed RC2 path: `Schedule I/Mods/ImprovedPackagersPORTED.dll`; post-copy SHA-256: `E4F8D59BAA02165139B15677190D2758D17661B62CD15C9A931C4CC65FCBD58E`.
+- RC1 rollback copy: `artifacts/installed-backup-2026-10-11-rc1-ImprovedPackagersPORTED.dll`, SHA-256 `57C45448FBC48F97C5A3027FDD9358E2A6C6EEA2F7F423495B1C825B865BF04E`.
 
 ### CTA-gated installation and runtime checklist
 
-Install RC2 over RC1, then first test with Improved Packagers PORTED and its required Mod Manager dependency only. The previously observed Harder Working Employees build was separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` was missing), so it must not be used to judge this candidate until that mod's update is confirmed.
+RC2 is installed. First test with Improved Packagers PORTED and its required Mod Manager dependency only. The previously observed Harder Working Employees build was separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` was missing), so it must not be used to judge this candidate until that mod's update is confirmed.
 
 1. Confirm the new banner says `v2.0.2`, `0.4.7f12` and `0.4.7f12-compat-rc2`, with no Improved Packagers Harmony/undefined-target errors.
 2. Confirm Extended Logging is visible and defaults off; run a cycle without trace spam, then verify traces can be enabled and disabled live.
