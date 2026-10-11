@@ -2,10 +2,10 @@
 
 ## Schedule I 0.4.7f12 compatibility candidate
 
-- Status: `READY_AWAITING_CTA_TO_INSTALL_V2.0.2_0.4.7F12_RC1`
+- Status: `INSTALLED_AWAITING_RUNTIME_TEST_V2.0.2_0.4.7F12_RC1`
 - Branch: `compat/schedule-i-0.4.7f12`
 - Source base: `902a4baa5a195d271c5d81c2d338fc0901f4e9e4` (`feat/extended-logging`)
-- Work mode: offline/static only. The candidate has **not** been copied to the game and the game has not been launched for it.
+- Installed on 2026-10-11 after the owner's CTA; the game has not yet been launched with this candidate.
 - Public stable remains 2.0.1 for 0.4.6f13 until the owner approves installation, live testing and release work.
 
 ### 0.4.7f12 reference evidence
@@ -28,6 +28,8 @@
 - Candidate package: `artifacts/Improved-Packagers-PORTED-v2.0.2-Schedule-I-0.4.7f12-compat-rc1.zip`.
 - Candidate package SHA-256: `A0442158F9A930A640E6DA3F9A8E9DB18DDB3979F2DC3455EDB1B58FA6C4A975`.
 - The ZIP contains one root-level file, `ImprovedPackagersPORTED.dll` (33,280 bytes), and no game, loader or interop dependencies.
+- Installed DLL: `Schedule I/Mods/ImprovedPackagersPORTED.dll`; post-copy SHA-256 exactly matches the candidate (`57C45448FBC48F97C5A3027FDD9358E2A6C6EEA2F7F423495B1C825B865BF04E`).
+- Rollback copy of the prior DLL: `artifacts/installed-backup-2026-10-11-075BFE2B-ImprovedPackagersPORTED.dll`, SHA-256 `075BFE2B38F3804FD61C33A45B6464DE195E1ED964DE60880CF6684133FA16B0`.
 - Static IL inspection confirms both input-routing paths clear the transit input list, map Unpackage to `OutputSlot`, and restore Package to `ProductSlot` plus `PackagingSlot`.
 - The previously installed 2.0.2 f13 logging candidate reached the 0.4.7f12 main menu without an Improved Packagers `HarmonyException` or undefined-target error. That is useful startup baseline evidence only; it is not a runtime pass for this candidate.
 
@@ -46,7 +48,7 @@ The `InputSlots` getter patch also restores the package-mode list after a mode s
 
 ### CTA-gated installation and runtime checklist
 
-Do not install until the owner gives the CTA. On approval, first test with Improved Packagers PORTED and its required Mod Manager dependency only. The currently installed Harder Working Employees build is separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` is missing), so it must not be used to judge this candidate until that mod is updated.
+Installation is complete. First test with Improved Packagers PORTED and its required Mod Manager dependency only. The previously observed Harder Working Employees build was separately broken on 0.4.7f12 (`NPCMovement.get_WalkSpeed()` was missing), so it must not be used to judge this candidate until that mod's update is confirmed.
 
 1. Confirm the new banner says `v2.0.2`, `0.4.7f12` and `0.4.7f12-compat-rc1`, with no Improved Packagers Harmony/undefined-target errors.
 2. Confirm Extended Logging is visible and defaults off; run a cycle without trace spam, then verify traces can be enabled and disabled live.
