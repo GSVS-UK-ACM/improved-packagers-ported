@@ -2,10 +2,10 @@
 
 ## Schedule I 0.4.7f12 compatibility candidate
 
-- Status: `INSTALLED_AWAITING_RUNTIME_TEST_V2.0.2_0.4.7F12_RC2`
+- Status: `RUNTIME_PASS_READY_TO_PUBLISH_V2.0.2_0.4.7F12`
 - Branch: `compat/schedule-i-0.4.7f12`
 - Source base: `902a4baa5a195d271c5d81c2d338fc0901f4e9e4` (`feat/extended-logging`)
-- RC2 was installed on 2026-10-11 after the owner's CTA; its post-copy hash matches the verified candidate. The game has not yet been launched with RC2.
+- RC2 was installed and play-tested successfully on 2026-10-11. The owner explicitly approved updating GitHub and Nexus Mods after the pass.
 - Public stable remains 2.0.1 for 0.4.6f13 until the owner approves installation, live testing and release work.
 
 ### 0.4.7f12 reference evidence
@@ -62,6 +62,18 @@ The owner identified the exact remaining case: a brick reaches `OutputSlot`, but
 - Package contents: one root-level `ImprovedPackagersPORTED.dll` (34,816 bytes).
 - Installed RC2 path: `Schedule I/Mods/ImprovedPackagersPORTED.dll`; post-copy SHA-256: `E4F8D59BAA02165139B15677190D2758D17661B62CD15C9A931C4CC65FCBD58E`.
 - RC1 rollback copy: `artifacts/installed-backup-2026-10-11-rc1-ImprovedPackagersPORTED.dll`, SHA-256 `57C45448FBC48F97C5A3027FDD9358E2A6C6EEA2F7F423495B1C825B865BF04E`.
+
+### RC2 live-game result and release packages
+
+- Owner result: **PASS**; the corrected brick/baggie case worked perfectly along with the normal workflow.
+- Runtime log SHA-256: `2070DB9A3254F1918A87602C6078A6CA38B1E7DAF65FA66531243A23E99EAB1A` (150,279 bytes; last written 2026-10-11 22:03:10 Europe/London).
+- Log identity confirms Improved Packagers PORTED `2.0.2`, Schedule I `0.4.7f12`, and build `0.4.7f12-compat-rc2`.
+- No Improved Packagers error, exception, undefined target, or Harmony failure appears.
+- Extended Logging was off: zero Improved Packagers `[Trace]` lines were emitted.
+- The observed S1API and DeliverySpotsPlus exceptions are independently attributed to those mods and do not mention Improved Packagers.
+- Final GitHub asset: `artifacts/Improved-Packagers-PORTED-v2.0.2-Schedule-I-0.4.7f12.zip`, SHA-256 `17127B3DA33C3A8D50635BACD7E8C6FFD2A53A9FB302349953A04F0AF353EC33`.
+- Final Nexus asset: `artifacts/Improved-Packagers-PORTED-v2.0.2-NEXUS-Schedule-I-0.4.7f12.zip`, SHA-256 `23D830474C95CF6CDFBD79AEA7D8A9CB2B7F8A6271487B2D7CEB079AC2ADB589`.
+- Both archives contain the exact tested DLL SHA-256 `E4F8D59BAA02165139B15677190D2758D17661B62CD15C9A931C4CC65FCBD58E`.
 
 ### CTA-gated installation and runtime checklist
 

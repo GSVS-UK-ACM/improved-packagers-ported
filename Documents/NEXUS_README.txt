@@ -1,16 +1,19 @@
 IMPROVED PACKAGERS PORTED
-Version 2.0.1 | Schedule I 0.4.6f13 IL2CPP
+Version 2.0.2 | Schedule I 0.4.7f12 IL2CPP
+
+WORKS WITH THE NEW UPDATE
+Special Customers / Schedule I 0.4.7f12
 
 Original author: GuysWeForgotDre
 Compatibility port maintained by: GSVS UK ACM
 
-This independently maintained port restores Improved Packagers on the f13
+This independently maintained port restores Improved Packagers on the current
 IL2CPP game build. It lets assigned Packagers follow each Packaging Station's
 pack/unpack mode, move loose output to storage and load vehicles at Loading Bays.
 
 REQUIREMENTS
 ------------
-- Schedule I 0.4.6f13 IL2CPP
+- Schedule I 0.4.7f12 IL2CPP
 - MelonLoader 0.7.0 Open-Beta
 - Mod Manager & Phone App (REQUIRED):
   https://www.nexusmods.com/schedule1/mods/397
@@ -37,8 +40,10 @@ the normal storage/transit workflow.
 
 COMPATIBILITY
 -------------
-- Built and play-tested on Schedule I 0.4.6f13 IL2CPP.
-- Tested both by itself and with HWE 2.2.3 enabled.
+- Built and play-tested on Schedule I 0.4.7f12 IL2CPP.
+- Correctly loads packaged products into the unpack input and delivers loose output.
+- Brick unpacking works even when baggies remain in the Packaging slot.
+- Extended Logging is available in Mod Manager and defaults to off.
 - No new Mono compatibility claim is made by this port.
 
 SUPPORT AND SOURCE
@@ -49,6 +54,6 @@ https://github.com/xboxnuker-rgb/improved-packagers-ported
 CREDITS AND LICENCE
 -------------------
 Improved Packagers was created by GuysWeForgotDre. GSVS UK ACM maintains this
-f13 IL2CPP compatibility port. The original project and this distribution use
+IL2CPP compatibility port. The original project and this distribution use
 the MIT License. See NOTICE.txt and LICENSE.txt included with this download.
 

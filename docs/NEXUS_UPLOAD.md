@@ -10,15 +10,15 @@ Schedule I
 
 **Mod name**
 
-Improved Packagers PORTED - f13 IL2CPP Compatibility Port
+Improved Packagers PORTED - 0.4.7 IL2CPP Compatibility Port
 
 **One-line summary**
 
-Restores Improved Packagers on Schedule I 0.4.6f13 IL2CPP so assigned workers can unpack products, move station output and load vehicles.
+Updated for Schedule I 0.4.7f12: assigned workers can unpack products, move station output and load vehicles. Original mod by GuysWeForgotDre; port maintained by GSVS UK ACM.
 
 **Version**
 
-2.0.1
+2.0.2
 
 **Category**
 
@@ -38,10 +38,10 @@ GuysWeForgotDre | Ported by GSVS UK ACM
 
 ## General-page field map
 
-- **Mod Name:** `Improved Packagers PORTED - f13 IL2CPP Compatibility Port`
+- **Mod Name:** `Improved Packagers PORTED - 0.4.7 IL2CPP Compatibility Port`
 - **Game:** `Schedule I` (already locked by the draft)
 - **Category:** `Employees`
-- **Mod version:** `2.0.1` — replace the draft default `1.0`
+- **Mod version:** `2.0.2`
 - **Author or team name:** `GuysWeForgotDre | Ported by GSVS UK ACM` — replace the account-name placeholder
 - **Short description:** use the one-line summary above
 - **Translation of another mod:** leave unchecked; this is a compatibility port, not a language translation
@@ -51,7 +51,7 @@ GuysWeForgotDre | Ported by GSVS UK ACM
 
 ## Requirements
 
-- Schedule I 0.4.6f13 IL2CPP
+- Schedule I 0.4.7f12 IL2CPP
 - MelonLoader 0.7.0 Open-Beta
 - [Mod Manager & Phone App](https://www.nexusmods.com/schedule1/mods/397) — **required**, not optional
 
@@ -62,6 +62,7 @@ Use the polished master copy in [`docs/NEXUS_DESCRIPTION.md`](NEXUS_DESCRIPTION.
 ### Rich-text formatting plan
 
 - Format `IMPROVED PACKAGERS PORTED` as the largest heading and colour it purple to match the in-game GSVS banner.
+- Put the green **WORKS WITH THE NEW SPECIAL CUSTOMERS UPDATE — SCHEDULE I 0.4.7f12** callout immediately below the title so compatibility is visible before any other copy.
 - Format the one-line compatibility statement beneath it as a quote/callout; bold the original author and maintainer names.
 - Use heading level 2 for each major section and heading level 3 for troubleshooting/credit subsections.
 - Preserve numbered installation and usage steps as numbered lists, and features/testing notes as bullets.
@@ -77,11 +78,11 @@ Use the polished master copy in [`docs/NEXUS_DESCRIPTION.md`](NEXUS_DESCRIPTION.
 
 **File title**
 
-Improved Packagers PORTED 2.0.1 - Schedule I 0.4.6f13 IL2CPP
+Improved Packagers PORTED 2.0.2 - Schedule I 0.4.7f12 IL2CPP
 
 **Upload filename**
 
-`Improved-Packagers-PORTED-v2.0.1-NEXUS-Schedule-I-f13.zip`
+`Improved-Packagers-PORTED-v2.0.2-NEXUS-Schedule-I-0.4.7f12.zip`
 
 **File description**
 
@@ -92,14 +93,13 @@ Main file. Includes ImprovedPackagersPORTED.dll, the original MIT licence, port 
 **Changelog**
 
 ```text
-2.0.1
-- Ported Improved Packagers to Schedule I 0.4.6f13 IL2CPP.
-- Updated Harmony targets and station UI access for f13.
-- Restored worker selection, station operation, pickup and delivery for unpack mode.
-- Added loose-product routing through the game's native transit workflow.
-- Restored brick, jar and baggie loading into unpack-mode Packaging Stations.
-- Standardized the visible name, DLL and log identity as Improved Packagers PORTED.
-- Preserved original-author credit and added clear port-maintainer attribution.
+2.0.2
+- Updated and play-tested for Schedule I 0.4.7f12 / Special Customers.
+- Corrected worker routing into the physical unpack input slot.
+- Brick unpacking now ignores leftover baggies in the Packaging slot without removing them.
+- Preserved vanilla packaging-capacity rules for jar and baggie unpacking.
+- Added optional Extended Logging; normal logs remain concise by default.
+- Retained unpack delivery and Loading Bay vehicle-loading support.
 ```
 
 ## Permissions and disclosure answers
@@ -147,7 +147,7 @@ The maintainer-support link remains available on GitHub. Keeping the Nexus descr
 
 - [ ] Select Schedule I and the Employees category.
 - [ ] Keep **PORTED** in the mod name and file title.
-- [ ] Change the draft version from `1.0` to `2.0.1`.
+- [ ] Set the mod and main-file version to `2.0.2`.
 - [ ] Set the author/team field to `GuysWeForgotDre | Ported by GSVS UK ACM`.
 - [ ] Mark Mod Manager & Phone App as a required dependency.
 - [ ] Select Gameplay, Bug Fixes, Quality of Life, Utilities for Players and **AI-Generated Content**.

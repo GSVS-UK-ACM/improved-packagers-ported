@@ -4,7 +4,7 @@ Original project and core work:
 Copyright (c) 2025 GuysWeForgotDre
 https://github.com/GuysWeForgotDre/Improved-Packagers
 
-Schedule I 0.4.6f13 IL2CPP compatibility port:
+Schedule I 0.4.7f12 IL2CPP compatibility port:
 Maintained by GSVS UK ACM
 https://github.com/xboxnuker-rgb/improved-packagers-ported
 
